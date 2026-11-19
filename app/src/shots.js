@@ -1,24 +1,19 @@
-// Fixed scenes for screenshots: ?shot=editor shows the page with sample photos;
-// ?shot=cover shows the cover alone. `photo` picks a sample (samples/<photo>.jpg),
-// `caption` the title, `layout` and `grade` the look, `size` the export size.
-// window.__shotReady is set once the scene has been painted.
-export async function runShot(shot, query, state, tools) {
+// Fixed scenes for screenshots: ?shot=editor shows the page with a sample
+// photo loaded; ?shot=cover shows the cover alone. `photo` picks the sample
+// (samples/<photo>.jpg), `caption` the title, and `layout`, `grade`, `size`
+// and `subtitle` the rest of the scene. window.__shotReady is set once the
+// scene has painted, so a screenshot tool knows when to shoot.
+export async function runShot(shot, query, api) {
   if (shot === 'cover') document.body.classList.add('shot-cover');
-  const layout = query.get('layout');
-  const grade = query.get('grade');
-  const size = query.get('size');
-  if (layout) state.layout = layout;
-  if (grade) state.grade = grade;
-  if (size && tools.applySize) tools.applySize(size);
-  const [pier, boulevard] = await Promise.all([
-    tools.loadImage(`samples/${query.get('photo') ?? 'pier'}.jpg`),
-    tools.loadImage(`samples/${query.get('photo2') ?? 'boulevard'}.jpg`),
-  ]);
-  state.samePhoto = false;
-  state.photos = [pier, boulevard, pier];
-  state.title = query.get('caption') ?? 'Sunset Heist';
-  state.subtitle = query.get('subtitle') ?? 'Neon nights · Ocean Drive';
-  if (tools.syncControls) tools.syncControls();
-  tools.redraw();
+  const scene = {
+    photo: query.get('photo') ?? 'pier',
+    caption: query.get('caption') ?? 'Vice Lights',
+    subtitle: query.get('subtitle') ?? 'A Leonida story',
+    layout: query.get('layout') ?? 'spotlight',
+    grade: query.get('grade') ?? 'sunset',
+    size: query.get('size') ?? '1080x1080',
+  };
+  await api.loadScene(scene);
+  document.title = `Vice Lights — ${scene.caption} (${api.gradeName()}, ${scene.size})`;
   requestAnimationFrame(() => requestAnimationFrame(() => { window.__shotReady = true; }));
 }
