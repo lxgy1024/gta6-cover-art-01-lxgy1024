@@ -1,12 +1,27 @@
-html, body { margin: 0; height: 100%; background: #f2f0f4; color: #1d1b22; font: 15px/1.4 system-ui, sans-serif; }
-.app { display: flex; gap: 32px; align-items: center; justify-content: center; height: 100%; padding: 24px; box-sizing: border-box; }
-.controls { display: flex; flex-direction: column; gap: 14px; width: 280px; }
-.controls h1 { margin: 0; font-size: 28px; }
-.controls p { margin: 0; color: #5c5866; }
-label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; }
-input[type=text] { font: inherit; padding: 8px; border: 1px solid #c9c4d1; border-radius: 6px; }
-button { font: inherit; font-weight: 700; padding: 10px; border: 0; border-radius: 6px; background: #1d1b22; color: #fff; cursor: pointer; }
-canvas { width: min(70vh, 60vw); height: min(70vh, 60vw); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); }
-body.shot-cover .controls { display: none; }
-body.shot-cover .app { padding: 0; }
-body.shot-cover canvas { width: 100vw; height: 100vh; box-shadow: none; }
+/* Neon Vice Cover Studio — dark neon editor chrome. The cover itself is drawn on
+   canvas (see src/cover.js); this stylesheet only styles the editor around it. */
+html, body { margin: 0; min-height: 100%; background: #12081f; color: #f5eefc; font: 15px/1.45 system-ui, -apple-system, sans-serif; }
+.app { display: flex; gap: 28px; padding: 24px; box-sizing: border-box; max-width: 1500px; margin: 0 auto; align-items: flex-start; }
+.panel { width: 330px; flex: none; display: flex; flex-direction: column; gap: 16px; }
+.panel h1 { margin: 0; font-size: 26px; line-height: 1.15; letter-spacing: 0.5px; color: #ffd166; font-style: italic; text-transform: uppercase; }
+.tagline { margin: 0; color: #c9b8dd; font-size: 13.5px; }
+fieldset { border: 1px solid #3d2358; border-radius: 10px; padding: 12px 14px; margin: 0; display: flex; flex-direction: column; gap: 10px; background: #1a0e2c; }
+legend { font-weight: 700; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: #ff8fb2; padding: 0 6px; }
+label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 13.5px; }
+label.check { flex-direction: row; align-items: center; gap: 8px; font-weight: 500; }
+input[type=text] { font: inherit; padding: 8px 10px; border: 1px solid #5b3a80; border-radius: 6px; background: #241238; color: #fff; }
+input[type=range] { accent-color: #ff5e3a; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; }
+button { font: inherit; font-weight: 700; padding: 9px 12px; border: 1px solid #5b3a80; border-radius: 6px; background: #2a1745; color: #f5eefc; cursor: pointer; }
+button:hover { border-color: #ff8fb2; }
+button.primary { background: #ff5e3a; border-color: #ff5e3a; color: #fff; font-size: 16px; }
+button.active { background: #ffd166; border-color: #ffd166; color: #241238; }
+#status { margin: 0; color: #9be7c4; font-size: 13px; min-height: 1.2em; }
+.preview { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; position: sticky; top: 24px; }
+.preview canvas { width: min(72vh, 100%); height: auto; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55); border-radius: 4px; }
+.hint { margin: 0; color: #8f7ba8; font-size: 13px; }
+/* Screenshot mode: the cover fills the whole frame, no editor chrome. */
+body.shot-cover .panel, body.shot-cover .hint { display: none; }
+body.shot-cover .app { padding: 0; max-width: none; }
+body.shot-cover .preview { position: static; }
+body.shot-cover .preview canvas { width: 100vw; height: 100vh; object-fit: contain; box-shadow: none; border-radius: 0; background: #0d0518; }
